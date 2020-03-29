@@ -1,0 +1,27 @@
+[Unit]
+Description=Prometheus Node Exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User={{ node_exporter_user }}
+Group={{ node_exporter_group }}
+Type=simple
+ExecStart={{ node_exporter_dir }}/node_exporter \
+        --web.listen-address=0.0.0.0:9100 \
+        --log.level=debug \
+    {% for collectors in node_exporter_collectors %}
+    --collector.{{ collectors }} \
+    {% endfor %}
+    {% for collectors in node_exporter_nocollectors %}
+    --no-collector.{{ collectors }} \
+    {% endfor %}
+    --collector.systemd.unit-whitelist=({{ node_exporter_systemd_services | join('|') }})\.service \
+SyslogIdentifier=prometheus_node_exporter
+Restart=always
+ExecReload=/bin/kill -HUP $MAINPID
+TimeoutStopSec=10s
+SendSIGKILL=no
+
+[Install]
+WantedBy=multi-user.target
