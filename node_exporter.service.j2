@@ -10,6 +10,7 @@ Type=simple
 ExecStart={{ node_exporter_dir }}/node_exporter \
         --web.listen-address=0.0.0.0:9100 \
         --log.level=debug \
+        --log.format=logger:stdout?json=true \
     {% for collectors in node_exporter_collectors %}
     --collector.{{ collectors }} \
     {% endfor %}
