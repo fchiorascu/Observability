@@ -12,6 +12,7 @@ ExecStart={{ alertmanager_dir }}/alertmanager
         --web.route-prefix={{ alertmanager_prefix }} \
         --web.external-url={{ alertmanager_web_external_url }} \
         --log.level=debug
+        --log.format=json
 ExecReload=/bin/kill -HUP $MAINPID
 TimeoutStopSec=10s
 SendSIGKILL=no
