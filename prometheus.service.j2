@@ -18,6 +18,8 @@ ExecStart={{ prometheus_dir }}/prometheus
         --storage.tsdb.retention=31d \
         --web.external-url={{ prometheus_web_external_url }} \
         --log.level=debug
+        --log.format=json
+        --web.enable-admin-api
 ExecReload=/bin/kill -HUP $MAINPID
 TimeoutStopSec=10s
 SendSIGKILL=no
