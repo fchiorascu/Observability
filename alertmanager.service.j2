@@ -1,0 +1,20 @@
+[Unit]
+Description=Prometheus Alertmanager
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User={{ alertmanager_user }}
+Group={{ alertmanager_group }}
+Type=simple
+ExecStart={{ alertmanager_dir }}/alertmanager
+        --config.file={{ alertmanager_dir }}/alertmanager.yml \
+        --web.route-prefix={{ alertmanager_prefix }} \
+        --web.external-url={{ alertmanager_web_external_url }} \
+        --log.level=debug
+ExecReload=/bin/kill -HUP $MAINPID
+TimeoutStopSec=10s
+SendSIGKILL=no
+
+[Install]
+WantedBy=default.target
