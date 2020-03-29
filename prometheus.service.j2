@@ -1,0 +1,26 @@
+[Unit]
+Description=Prometheus Server
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User={{ prometheus_user }}
+Group={{ prometheus_group }}
+Type=simple
+ExecStart={{ prometheus_dir }}/prometheus
+        --config.file={{ prometheus_dir }}/prometheus.yml \
+        --web.route-prefix={{ prometheus_prefix }} \
+        --storage.tsdb.path={{ prometheus_data }} \
+        --web.console.templates={{ prometheus_dir }}/consoles \
+        --web.console.libraries={{ prometheus_dir }}/console_libraries \
+        --storage.tsdb.min-block-duration=1h \
+        --storage.tsdb.max-block-duration=12h \
+        --storage.tsdb.retention=31d \
+        --web.external-url={{ prometheus_web_external_url }} \
+        --log.level=debug
+ExecReload=/bin/kill -HUP $MAINPID
+TimeoutStopSec=10s
+SendSIGKILL=no
+
+[Install]
+WantedBy=default.target
