@@ -18,8 +18,10 @@ ExecStart={{ node_exporter_dir }}/node_exporter \
     --no-collector.{{ collectors }} \
     {% endfor %}
     --collector.systemd.unit-whitelist=({{ node_exporter_systemd_services | join('|') }})\.service \
+    
 SyslogIdentifier=prometheus_node_exporter
 Restart=always
+
 ExecReload=/bin/kill -HUP $MAINPID
 TimeoutStopSec=10s
 SendSIGKILL=no
