@@ -329,8 +329,8 @@ groups:
       summary: "xfs allocation blocks >85%."
 #file, processes handlers
   - alert: node_file_handlers
-    expr: (node_filefd_allocated / node_filefd_maximum) < 0.85
-    for: 30s
+    expr: (node_filefd_allocated / node_filefd_maximum) > 0.85
+    for: 5m
     labels:
       severity: critical
     annotations:
