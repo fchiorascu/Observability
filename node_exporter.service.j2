@@ -9,8 +9,6 @@ Group={{ node_exporter_group }}
 Type=simple
 ExecStart={{ node_exporter_dir }}/node_exporter \
         --web.listen-address=0.0.0.0:9100 \
-        --log.level=debug \
-        --log.format=logger:stdout?json=true \
     {% for collectors in node_exporter_collectors %}
     --collector.{{ collectors }} \
     {% endfor %}
@@ -18,7 +16,10 @@ ExecStart={{ node_exporter_dir }}/node_exporter \
     --no-collector.{{ collectors }} \
     {% endfor %}
     --collector.systemd.unit-whitelist=({{ node_exporter_systemd_services | join('|') }})\.service \
-    
+    --web.disable-exporter-metrics \
+    --log.level=debug \
+    --log.format=logger:stdout?json=true \
+
 SyslogIdentifier=prometheus_node_exporter
 Restart=always
 
