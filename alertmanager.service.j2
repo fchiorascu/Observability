@@ -8,11 +8,13 @@ User={{ alertmanager_user }}
 Group={{ alertmanager_group }}
 Type=simple
 ExecStart={{ alertmanager_dir }}/alertmanager
-        --config.file={{ alertmanager_dir }}/alertmanager.yml \
+        --config.file {{ alertmanager_dir }}/alertmanager.yml \
+        --storage.path={{ alertmanager_dir }}/data/ \
         --web.route-prefix={{ alertmanager_prefix }} \
         --web.external-url={{ alertmanager_web_external_url }} \
-        --log.level=debug
-        --log.format=json
+        --log.level=debug \
+        --log.format=json \
+
 ExecReload=/bin/kill -HUP $MAINPID
 TimeoutStopSec=10s
 SendSIGKILL=no
