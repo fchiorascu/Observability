@@ -1,0 +1,25 @@
+[Unit]
+Description=Prometheus Blackbox Exporter
+Documentation=https://github.com/prometheus/blackbox_exporter
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=blackbox_exporter
+Group=blackbox_exporter
+
+ExecStart={{ blackbox_exporter_dir }}/blackbox_exporter \
+        --config.file {{ blackbox_exporter_dir }}/blackbox.yml \
+        --log.level=debug \
+        --log.format=json \
+
+SyslogIdentifier=prometheus_blackbox_exporter
+Restart=always
+
+ExecReload=/bin/kill -HUP $MAINPID
+TimeoutStopSec=10s
+SendSIGKILL=no
+
+[Install]
+WantedBy=multi-user.target
