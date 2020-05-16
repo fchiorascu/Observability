@@ -13,13 +13,17 @@ ExecStart={{ prometheus_dir }}/prometheus
         --storage.tsdb.path={{ prometheus_data }} \
         --web.console.templates={{ prometheus_dir }}/consoles \
         --web.console.libraries={{ prometheus_dir }}/console_libraries \
-        --storage.tsdb.min-block-duration=1h \
-        --storage.tsdb.max-block-duration=12h \
+        --storage.tsdb.min-block-duration=2h \
+        --storage.tsdb.max-block-duration=72h \
         --storage.tsdb.retention=31d \
         --web.external-url={{ prometheus_web_external_url }} \
-        --log.level=debug
-        --log.format=json
-        --web.enable-admin-api
+        --web.enable-lifecycle \
+        --log.level=debug \
+        --log.format=json \
+
+SyslogIdentifier=prometheus_prometheus
+Restart=always
+
 ExecReload=/bin/kill -HUP $MAINPID
 TimeoutStopSec=10s
 SendSIGKILL=no
