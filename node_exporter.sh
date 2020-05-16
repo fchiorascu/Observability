@@ -46,10 +46,10 @@ ExecStart=/opt/node_exporter/node_exporter \
         --no-collector.textfile \
         --no-collector.conntrack \
         --no-collector.infiniband \
+        --collector.systemd.unit-whitelist=(grafana-server|prometheus|alertmanager|node_exporter|sshd|crond|ntpd)\\.service \
         --log.level=debug \
         --log.format=logger:stdout?json=true \
-        --collector.systemd.unit-whitelist=(grafana-server|prometheus|alertmanager|node_exporter|sshd|crond|ntpd)\\.service \
-        
+ 
 SyslogIdentifier=prometheus_node_exporter
 Restart=always
 
