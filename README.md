@@ -21,7 +21,7 @@ To run the application locally below are the commands and arguments used in CLI.
 > /opt/blackbox_exporter/blackbox_exporter --config.file /opt/blackbox_exporter/blackbox.yml --log.level=debug --log.format=json
 
 *grafana:*
-> /usr/share/grafana/bin/grafana-cli plugins install jdbranham-diagram-panel && /usr/share/grafana/bin/grafana-cli plugins install grafana-worldmap-panel && /usr/share/grafana/bin/grafana-cli plugins install grafana-piechart-panel && /usr/share/grafana/bin/grafana-server restart
+> /usr/share/grafana/bin/grafana-server restart
 		
 *prometheus:*
 > /opt/prometheus/prometheus--config.file /opt/prometheus/prometheus.yml --storage.tsdb.path=/data/prometheus --web.console.templates=/opt/prometheus/consoles --web.console.libraries=/opt/prometheus/console_libraries --web.enable-lifecycle --storage.tsdb.retention.time=31d --storage.tsdb.max-block-duration=72h --storage.tsdb.min-block-duration=2h --log.level=debug --log.format=json
