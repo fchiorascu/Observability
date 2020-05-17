@@ -43,6 +43,7 @@ To check the application configuration with below commands and arguments used in
 		
 *prometheus:*
 > /opt/prometheus/promtool check config /opt/prometheus/prometheus.yml
+
 - curl -s -i 'http://localhost:9090/-/ready';echo $?
 *#readiness*
 - curl -s -i 'http://localhost:9090/-/healthy';echo $?
@@ -56,6 +57,7 @@ To check the application configuration with below commands and arguments used in
 
 *alertmanager:*
 > /opt/alertmanager/amtool --alertmanager.url=http://localhost:9093 check-config /opt/alertmanager/alertmanager.yml
+
 - curl -s -i 'http://localhost:9093/metrics';echo $?  
 *#internal metrics*
 - curl -s -i 'http://localhost:9093/api/v2/status';echo $?
@@ -67,11 +69,13 @@ To check the application configuration with below commands and arguments used in
 
 *blackbox_exporter:*
 > /opt/blackbox_exporter/blackbox_exporter --config.check | grep -i "Config file is ok exiting..."
+
 - curl -s -i 'http://localhost:9115/metrics';echo $?
 *#internal metrics*
 - curl -s -i 'http://localhost:9115/probe?target=https://www.google.com&module=http_2xx&debug=true';echo $?
 *#probe target metrics example*
 
 *node_exporter:*
+
 - curl -s -i 'http://localhost:9100/metrics';echo $?
 *#internal metrics*
