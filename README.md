@@ -11,7 +11,8 @@ Observability is a measure of how well internal states of a system can be inferr
 - exporters: colects metrics from different applications.
 - [ ] **Alerting**
 Alerting rules in Prometheus servers send alerts to an Alertmanager. The Alertmanager then manages those alerts, including silencing, inhibition, aggregation and sending out notifications via methods such as email, on-call notification systems, and chat platforms.
-
+- [ ] **Probing**
+- blackbox_exporter: probes urls/certificates.
 
 ## RUN
 To run the application locally below are the commands and arguments used in CLI.
