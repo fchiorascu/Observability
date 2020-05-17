@@ -79,3 +79,7 @@ To check the application configuration with below commands and arguments used in
 
 - curl -s -i 'http://localhost:9100/metrics';echo $?
 *#internal metrics*
+
+
+# Dashboards (Grafana)
+- https://grafana.com/grafana/dashboards/9096
