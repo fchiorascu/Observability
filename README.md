@@ -38,10 +38,7 @@ To check the application configuration with below commands and arguments used in
 
 *blackbox_exporter:*
 > /opt/blackbox_exporter/blackbox_exporter --config.check | grep -i "Config file is ok exiting..."
-
-*grafana:*
-> /usr/share/grafana/bin/grafana-cli plugins install jdbranham-diagram-panel && /usr/share/grafana/bin/grafana-cli plugins install grafana-worldmap-panel && /usr/share/grafana/bin/grafana-cli plugins install grafana-piechart-panel && /usr/share/grafana/bin/grafana-server restart
-		
+	
 *prometheus:*
 > /opt/prometheus/promtool check config /opt/prometheus/prometheus.yml
 
@@ -79,6 +76,11 @@ To check the application configuration with below commands and arguments used in
 *node_exporter:*
 
 - curl -s -i 'http://localhost:9100/metrics';echo $?
+*#internal metrics*
+
+*grafana:*
+
+- curl -s -i 'http://localhost:3000/metrics';echo $?
 *#internal metrics*
 
 
