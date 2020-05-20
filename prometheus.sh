@@ -442,7 +442,7 @@ chown --recursive prometheus:prometheus /data/prometheus;echo $?
 ln -s /opt/prometheus/promtool /usr/local/bin/promtool;echo $?
 ln -s /opt/prometheus/prometheus /usr/local/bin/prometheus;echo $?
 ls -ltrha /usr/local/bin/prom*
-/opt/prometheus/promtool check config /opt/prometheus/prometheus.yml
+/opt/prometheus/promtool check config /opt/prometheus/prometheus.yml;echo $?
 cat <<EOF >/usr/lib/systemd/system/prometheus.service
 [Unit]
 Description=Prometheus Server
@@ -465,7 +465,7 @@ ExecStart=/opt/prometheus/prometheus \
         --log.level=debug \
         --log.format=json \
 
-SyslogIdentifier=prometheus_prometheus
+SyslogIdentifier=prometheus
 Restart=always
 
 ExecReload=/bin/kill -HUP
