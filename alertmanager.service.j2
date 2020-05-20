@@ -15,7 +15,7 @@ ExecStart={{ alertmanager_dir }}/alertmanager
         --log.level=debug \
         --log.format=json \
 
-SyslogIdentifier=prometheus_alertmanager
+SyslogIdentifier=alertmanager
 Restart=always
 
 ExecReload=/bin/kill -HUP $MAINPID
