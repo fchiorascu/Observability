@@ -14,7 +14,7 @@ ExecStart={{ blackbox_exporter_dir }}/blackbox_exporter \
         --log.level=debug \
         --log.format=json \
 
-SyslogIdentifier=prometheus_blackbox_exporter
+SyslogIdentifier=blackbox_exporter
 Restart=always
 
 ExecReload=/bin/kill -HUP $MAINPID
