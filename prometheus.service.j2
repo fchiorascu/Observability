@@ -21,7 +21,7 @@ ExecStart={{ prometheus_dir }}/prometheus
         --log.level=debug \
         --log.format=json \
 
-SyslogIdentifier=prometheus_prometheus
+SyslogIdentifier=prometheus
 Restart=always
 
 ExecReload=/bin/kill -HUP $MAINPID
