@@ -42,45 +42,45 @@ To check the application configuration with below commands and arguments used in
 *prometheus:*
 > /opt/prometheus/promtool check config /opt/prometheus/prometheus.yml
 
-- curl -s -i 'http://localhost:9090/-/ready';echo $?
+- curl -s -i 'http://localhost:9090/-/ready'
 *#readiness*
-- curl -s -i 'http://localhost:9090/-/healthy';echo $?
+- curl -s -i 'http://localhost:9090/-/healthy'
 *#health*
-- curl -s -i 'http://localhost:9090/status';echo $?
+- curl -s -i 'http://localhost:9090/status'
 *#status page*
-- curl -s -i 'http://localhost:9090/metrics';echo $?
+- curl -s -i 'http://localhost:9090/metrics'
 *#internal metrics*
-- curl -s -i 'http://localhost:9090/metrics' | /opt/prometheus/promtool check metrics;echo $?
+- curl -s -i 'http://localhost:9090/metrics' | /opt/prometheus/promtool check metrics
 *#internal metrics correctness*
 
 *alertmanager:*
 > /opt/alertmanager/amtool --alertmanager.url=http://localhost:9093 check-config /opt/alertmanager/alertmanager.yml
 
-- curl -s -i 'http://localhost:9093/metrics';echo $?  
+- curl -s -i 'http://localhost:9093/metrics'
 *#internal metrics*
-- curl -s -i 'http://localhost:9093/api/v2/status';echo $?
+- curl -s -i 'http://localhost:9093/api/v2/status'
 *#status page*
-- curl -s -i 'http://localhost:9093/-/ready';echo $?
+- curl -s -i 'http://localhost:9093/-/ready'
 *#readiness*
-- curl -s -i 'http://localhost:9093/-/healthy';echo $?
+- curl -s -i 'http://localhost:9093/-/healthy'
 *#health*
 
 *blackbox_exporter:*
 > /opt/blackbox_exporter/blackbox_exporter --config.check | grep -i "Config file is ok exiting..."
 
-- curl -s -i 'http://localhost:9115/metrics';echo $?
+- curl -s -i 'http://localhost:9115/metrics'
 *#internal metrics*
-- curl -s -i 'http://localhost:9115/probe?target=https://www.google.com&module=http_2xx&debug=true';echo $?
+- curl -s -i 'http://localhost:9115/probe?target=https://www.google.com&module=http_2xx&debug=true'
 *#probe target metrics example*
 
 *node_exporter:*
 
-- curl -s -i 'http://localhost:9100/metrics';echo $?
+- curl -s -i 'http://localhost:9100/metrics'
 *#internal metrics*
 
 *grafana:*
 
-- curl -s -i 'http://localhost:3000/metrics';echo $?
+- curl -s -i 'http://localhost:3000/metrics'
 *#internal metrics*
 
 
