@@ -2,7 +2,7 @@
 wget -q https://github.com/prometheus/prometheus/releases/download/v2.18.1/prometheus-2.18.1.linux-amd64.tar.gz;echo $?
 sleep 1
 mkdir /opt/prometheus;echo $?
-cat <<EOF >/opt/prometheus/rules.yml
+cat > /opt/prometheus/rules.yml <<EOF
 groups:
 - name: HEARTBEAT
   rules:
@@ -24,7 +24,7 @@ groups:
     labels:
       severity: warning
     annotations:
-      description: "node_exporter scraped time for host: {{ $labels.job }} >15s.\nValue: {{ humanizeDuration $value }}."
+      description: "node_exporter scraped time for host: {{ $labels.job }} >15s.\nValue: {{ humanizeDuration \$value }}."
       summary: "node_exporter scraped time for host: {{ $labels.job }} >15s."
 #endpoints
   - alert: node_endpoint_down
@@ -33,7 +33,7 @@ groups:
     labels:
       severity: critical
     annotations:
-      description: "Endpoint =DOWN on host: {{ $labels.job }}, instance: {{ $labels.instance }} and needs attention.\nValue: {{ $value }}\nLabels: {{ $labels }}."
+      description: "Endpoint =DOWN on host: {{ $labels.job }}, instance: {{ $labels.instance }} and needs attention.\nValue: {{ \$value }}\nLabels: {{ \$labels }}."
       summary: "Endpoint =DOWN on host: {{ $labels.job }}."
       runbook: "Value for DOWN = 0 and UP = 1."
 #reboot
@@ -43,7 +43,7 @@ groups:
     labels:
       severity: critical
     annotations:
-      description: "VM: {{ $labels.job }} was rebooted.\nValue: {{ humanizeDuration $value }}."
+      description: "VM: {{ $labels.job }} was rebooted.\nValue: {{ humanizeDuration \$value }}."
       summary: "VM: {{ $labels.job }} was rebooted."
 #load
   - alert: node_load
@@ -52,7 +52,7 @@ groups:
     labels:
       severity: critical
     annotations:
-      description: "On host: {{ $labels.job }} load is too high.\nValue: {{ $value }}."
+      description: "On host: {{ $labels.job }} load is too high.\nValue: {{ \$value }}."
       summary: "Load is too high for host: {{ $labels.job }}."
 #cpu
   - alert: node_cpu_threshold_exceeded
@@ -61,7 +61,7 @@ groups:
     labels:
       severity: critical
     annotations:
-      description: "CPU usage has exceeded >85% for host: {{ $labels.job }}.\nValue: {{ humanizePercentage $value }}."
+      description: "CPU usage has exceeded >85% for host: {{ $labels.job }}.\nValue: {{ humanizePercentage \$value }}."
       summary: "CPU usage is dangerously high for host: {{ $labels.job }}."
 #memory
   - alert: node_memory_threshold_exceeded
@@ -70,7 +70,7 @@ groups:
     labels:
       severity: critical
     annotations:
-      description: "Memory usage has exceeded >85% for host: {{ $labels.job }}.\nValue: {{ humanizePercentage $value }}."
+      description: "Memory usage has exceeded >85% for host: {{ $labels.job }}.\nValue: {{ humanizePercentage \$value }}."
       summary: "Memory usage is dangerously high for host: {{ $labels.job }}."
 #swap
   - alert: node_swap_threshold_exceeded
@@ -79,7 +79,7 @@ groups:
     labels:
       severity: critical
     annotations:
-      description: "Swap usage has exceeded >85% for host: {{ $labels.job }}.\nValue: {{ humanizePercentage $value }}."
+      description: "Swap usage has exceeded >85% for host: {{ $labels.job }}.\nValue: {{ humanizePercentage \$value }}."
       summary: "Swap usage is dangerously high for host: {{ $labels.job }}."
 #filesystem
   - alert: node_filesystem_threshold_exceeded
@@ -87,8 +87,8 @@ groups:
     for: 5m
     labels:
       severity: critical
-    annotations: 
-      description: "Filesystem usage has exceeded >85% for host: {{ $labels.job }} with device: {{ $labels.device }}, mountpoint: {{ $labels.mountpoint }}, fstype: {{ $labels.fstype }}.\nValue: {{ $value }}."
+    annotations:
+      description: "Filesystem usage has exceeded >85% for host: {{ $labels.job }} with device: {{ $labels.device }}, mountpoint: {{ $labels.mountpoint }}, fstype: {{ $labels.fstype }}.\nValue: {{ \$value }}."
       summary: "Filesystem usage is dangerously high for host: {{ $labels.job }}."
 #disk
   - alert: node_disk_device_error
@@ -97,7 +97,7 @@ groups:
     labels:
       severity: warning
     annotations:
-      description: "Disk device error for host: {{ $labels.job }} with device: {{ $labels.device }}, mountpoint: {{ $labels.mountpoint }}, fstype: {{ $labels.fstype }}.\nValue: {{ $value }}."
+      description: "Disk device error for host: {{ $labels.job }} with device: {{ $labels.device }}, mountpoint: {{ $labels.mountpoint }}, fstype: {{ $labels.fstype }}.\nValue: {{ \$value }}."
       summary: "Disk device error for host: {{ $labels.job }}."
       runbook: "Value for OK = 0 and NOK != 0"
 
@@ -107,7 +107,7 @@ groups:
     labels:
       severity: warning
     annotations:
-      description: "Based on recent sampling, the disk is likely to will fill within the next 4 hours on host: {{ $labels.job }} with device: {{ $labels.device }}, mountpoint: {{ $labels.mountpoint }}, fstype: {{ $labels.fstype }}.\nValue: {{ humanize1024 $value }}."
+      description: "Based on recent sampling, the disk is likely to will fill within the next 4 hours on host: {{ $labels.job }} with device: {{ $labels.device }}, mountpoint: {{ $labels.mountpoint }}, fstype: {{ $labels.fstype }}.\nValue: {{ humanize1024 \$value }}."
       summary: "Disk is likely to will fill within the next 4 hours for host: {{ $labels.job }}."
 
   - alert: node_disk_space
@@ -116,7 +116,7 @@ groups:
     labels:
       severity: warning
     annotations:
-      description: "Disk space on host: {{ $labels.job }}, device: {{ $labels.device }}, mountpoint: {{ $labels.mountpoint }}, fstype: {{ $labels.fstype }} >85%.\nValue: {{ humanizePercentage $value }}."
+      description: "Disk space on host: {{ $labels.job }}, device: {{ $labels.device }}, mountpoint: {{ $labels.mountpoint }}, fstype: {{ $labels.fstype }} >85%.\nValue: {{ humanizePercentage \$value }}."
       summary: "Disk space on host: {{ $labels.job }} >85%."
 
   - alert: node_disk_iops_system
@@ -125,7 +125,7 @@ groups:
     labels:
       severity: warning
     annotations:
-      description: "Disk IOPs for host: {{ $labels.alias }} >800 I/O ops/sec (IOPs).\nValue: {{ humanize $value }}."
+      description: "Disk IOPs for host: {{ $labels.alias }} >800 I/O ops/sec (IOPs).\nValue: {{ humanize \$value }}."
       summary: "Disk IOPs for host: {{ $labels.alias }} >800 I/O ops/sec (IOPs)."
 
   - alert: node_disk_iops_data
@@ -134,7 +134,7 @@ groups:
     labels:
       severity: warning
     annotations:
-      description: "Disk IOPs for host: {{ $labels.alias }} >2400 I/O ops/sec (IOPs).\nValue: {{ humanize $value }}."
+      description: "Disk IOPs for host: {{ $labels.alias }} >2400 I/O ops/sec (IOPs).\nValue: {{ humanize \$value }}."
       summary: "Disk IOPs for host: {{ $labels.alias }} >2400 I/O ops/sec (IOPs)."
 
   - alert: node_disk_inodes
@@ -143,7 +143,7 @@ groups:
     labels:
       severity: warning
     annotations:
-      description: "Disk Inodes usage on host: {{ $labels.job }} >85% (IUse %), device: {{ $labels.device }}, fstype: {{ $labels.fstype }}, mountpoint: {{ $labels.mountpoint }}.\nValue: {{ humanize $value }}."
+      description: "Disk Inodes usage on host: {{ $labels.job }} >85% (IUse %), device: {{ $labels.device }}, fstype: {{ $labels.fstype }}, mountpoint: {{ $labels.mountpoint }}.\nValue: {{ humanize \$value }}."
       summary: "Disk Inodes usage on host: {{ $labels.job }} >85% (IUse %)."
 
   - alert: node_disk_read_latency
@@ -152,7 +152,7 @@ groups:
     labels:
       severity: warning
     annotations:
-      description: "High read latency on host: {{ $labels.alias }}, device: {{ $labels.device }}.\nValue: {{ humanizeDuration $value }}."
+      description: "High read latency on host: {{ $labels.alias }}, device: {{ $labels.device }}.\nValue: {{ humanizeDuration \$value }}."
       summary: "High read latency on host: {{ $labels.alias }}, device: {{ $labels.device }}."
       runbook: "The average value of the avg. Disk sec/read performance counter should be under 10 milliseconds and the maximum value of the avg. Disk sec/read performance counter should not exceed 50 milliseconds - databases."
 
@@ -162,7 +162,7 @@ groups:
     labels:
       severity: warning
     annotations:
-      description: "High write latency on host: {{ $labels.alias }}, device: {{ $labels.device }}.\nValue: {{ humanizeDuration $value }}."
+      description: "High write latency on host: {{ $labels.alias }}, device: {{ $labels.device }}.\nValue: {{ humanizeDuration \$value }}."
       summary: "High write latency on host: {{ $labels.alias }}, device: {{ $labels.device }}."
 #entropy
   - alert: node_entropy
@@ -171,7 +171,7 @@ groups:
     labels:
       severity: critical
     annotations:
-      description: "Entropy <500 on host: {{ $labels.job }}.\nValue: {{ $value }}."
+      description: "Entropy <500 on host: {{ $labels.job }}.\nValue: {{ \$value }}."
       summary: "Entropy is too low on host: {{ $labels.job }}."
 #ntp
   - alert: node_ntp_sanity
@@ -180,7 +180,7 @@ groups:
     labels:
       severity: critical
     annotations:
-      description: "NTP health is affected on host: {{ $labels.job }}, where 0 - Unhealthy and 1 - Healthy.\nValue: {{ $value }}."
+      description: "NTP health is affected on host: {{ $labels.job }}, where 0 - Unhealthy and 1 - Healthy.\nValue: {{ \$value }}."
       summary: "NTP health is affected on host: {{ $labels.job }} ."
       runbook: "https://github.com/prometheus/node_exporter/blob/master/docs/TIME.md"
 
@@ -190,7 +190,7 @@ groups:
     labels:
       severity: warning
     annotations:
-      description: "NTP leap seconds >0 on host: {{ $labels.job }}.\nValue: {{ $value }}."
+      description: "NTP leap seconds >0 on host: {{ $labels.job }}.\nValue: {{ \$value }}."
       summary: "Where 0 – OK, 1 – add leap second at UTC midnight, 2 – delete leap second at UTC midnight, 3 – unsynchronised."
       runbook: "https://github.com/prometheus/node_exporter/blob/master/docs/TIME.md"
 
@@ -200,7 +200,7 @@ groups:
     labels:
       severity: critical
     annotations:
-      description: "NTP offset between local time and ntpd time is different on host: {{ $labels.job }} .\nValue: {{ humanizeDuration $value }}."
+      description: "NTP offset between local time and ntpd time is different on host: {{ $labels.job }} .\nValue: {{ humanizeDuration \$value }}."
       summary: "NTP offset is >1s on host: {{ $labels.job }}."
       runbook: "https://github.com/prometheus/node_exporter/blob/master/docs/TIME.md"
 #systemd
@@ -210,7 +210,7 @@ groups:
     labels:
       severity: critical
     annotations:
-      description: "Service is not running: {{ $labels.name }}, with state: {{ $labels.state }} for host: {{ $labels.job }}.\nValue: {{ $value }}."
+      description: "Service is not running: {{ $labels.name }}, with state: {{ $labels.state }} for host: {{ $labels.job }}.\nValue: {{ \$value }}."
       summary: "Service is not running: {{ $labels.name }}, with state: {{ $labels.state }} for host: {{ $labels.job }}."
       runbook: "Value for DOWN = 0 and UP = 1."
 
@@ -220,7 +220,7 @@ groups:
     labels:
       severity: critical
     annotations:
-      description: "Service is not running: {{ $labels.name }}, with state: {{ $labels.state }} for host: {{ $labels.job }}.\nValue: {{ $value }}."
+      description: "Service is not running: {{ $labels.name }}, with state: {{ $labels.state }} for host: {{ $labels.job }}.\nValue: {{ \$value }}."
       summary: "Service is not running: {{ $labels.name }}, with state: {{ $labels.state }} for host: {{ $labels.job }}."
       runbook: "Keep ntpd running and chronyd stopped, where value for DOWN = 0 and UP = 1."
 
@@ -229,7 +229,7 @@ groups:
     labels:
       severity: critical
     annotations:
-      description: "Systemd unit state is flapping on host: {{ $labels.job }}, for service: {{ $labels.name }} with state: {{ $labels.state }}.\nValue: {{ $value }}."
+      description: "Systemd unit state is flapping on host: {{ $labels.job }}, for service: {{ $labels.name }} with state: {{ $labels.state }}.\nValue: {{ \$value }}."
       summary: "Systemd unit state is flapping on host: {{ $labels.job }}."
 
   - alert: node_systemd_unit_failed
@@ -238,7 +238,7 @@ groups:
     labels:
       severity: critical
     annotations:
-      description: "Systemd unit failed on host: {{ $labels.job }}, for service: {{ $labels.name }} with state: {{ $labels.state }}.\nValue: {{ $value }}."
+      description: "Systemd unit failed on host: {{ $labels.job }}, for service: {{ $labels.name }} with state: {{ $labels.state }}.\nValue: {{ \$value }}."
       summary: "Systemd unit failed on host: {{ $labels.job }}."
       runbook: "Check with: systemctl --failed and correct with: systemctl reset-failed."
 #network
@@ -248,7 +248,7 @@ groups:
     labels:
       severity: critical
     annotations:
-      description: "Unusually LOW bandwidth (IN) for host: {{ $labels.job }}, interface: {{ $labels.device }}.\nValue: {{ humanize1024 $value }}."
+      description: "Unusually LOW bandwidth (IN) for host: {{ $labels.job }}, interface: {{ $labels.device }}.\nValue: {{ humanize1024 \$value }}."
       summary: "Unusually LOW bandwidth (IN) for host: {{ $labels.job }}, interface: {{ $labels.device }}."
 
   - alert: node_network_OUT_low_bandwith_usage
@@ -257,7 +257,7 @@ groups:
     labels:
       severity: critical
     annotations:
-      description: "Unusually LOW bandwidth (OUT) for host: {{ $labels.job }}, interface: {{ $labels.device }}.\nValue: {{ humanize1024 $value }}."
+      description: "Unusually LOW bandwidth (OUT) for host: {{ $labels.job }}, interface: {{ $labels.device }}.\nValue: {{ humanize1024 \$value }}."
       summary: "Unusually LOW bandwidth (OUT) for host: {{ $labels.job }}, interface: {{ $labels.device }}."
 
   - alert: node_network_OUT_high_bandwith_usage
@@ -266,7 +266,7 @@ groups:
     labels:
       severity: critical
     annotations:
-      description: "Unusually HIGH bandwidth (OUT) for host: {{ $labels.job }}, interface: {{ $labels.device }}.\nValue: {{ humanize1024 $value }}."
+      description: "Unusually HIGH bandwidth (OUT) for host: {{ $labels.job }}, interface: {{ $labels.device }}.\nValue: {{ humanize1024 \$value }}."
       summary: "Unusually HIGH bandwidth (OUT) for host: {{ $labels.job }}, interface: {{ $labels.device }}."
 
   - alert: node_network_IN_high_bandwith_usage
@@ -275,7 +275,7 @@ groups:
     labels:
       severity: critical
     annotations:
-      description: "Unusually HIGH bandwidth (IN) for host: {{ $labels.job }}, interface: {{ $labels.device }}.\nValue: {{ humanize1024 $value }}."
+      description: "Unusually HIGH bandwidth (IN) for host: {{ $labels.job }}, interface: {{ $labels.device }}.\nValue: {{ humanize1024 \$value }}."
       summary: "Unusually HIGH bandwidth (IN) for host: {{ $labels.job }}, interface: {{ $labels.device }}."
 
   - alert: node_network_IN_drops
@@ -284,7 +284,7 @@ groups:
     labels:
       severity: warning
     annotations:
-      description: "Network drops on host: {{ $labels.job }}, interface: {{ $labels.device }}.\nValue: {{ $value }}."
+      description: "Network drops on host: {{ $labels.job }}, interface: {{ $labels.device }}.\nValue: {{ \$value }}."
       summary: "Network drops >0."
 
   - alert: node_network_OUT_drops
@@ -293,7 +293,7 @@ groups:
     labels:
       severity: warning
     annotations:
-      description: "Network drops on host: {{ $labels.job }}, interface: {{ $labels.device }}.\nValue: {{ $value }}."
+      description: "Network drops on host: {{ $labels.job }}, interface: {{ $labels.device }}.\nValue: {{ \$value }}."
       summary: "Network drops >0."
 
   - alert: node_network_IN_errors
@@ -302,7 +302,7 @@ groups:
     labels:
       severity: warning
     annotations:
-      description: "Network errors on host: {{ $labels.job }}, interface: {{ $labels.device }}.\nValue: {{ $value }}."
+      description: "Network errors on host: {{ $labels.job }}, interface: {{ $labels.device }}.\nValue: {{ \$value }}."
       summary: "Network errors on >0."
 
   - alert: node_network_OUT_errors
@@ -311,7 +311,7 @@ groups:
     labels:
       severity: warning
     annotations:
-      description: "Network errors on host: {{ $labels.job }}, interface: {{ $labels.device }}.\nValue: {{ $value }}."
+      description: "Network errors on host: {{ $labels.job }}, interface: {{ $labels.device }}.\nValue: {{ \$value }}."
       summary: "Network errors >0."
 
   - alert: node_network_interface_status
@@ -320,7 +320,7 @@ groups:
     labels:
       severity: critical
     annotations:
-      description: "Interface status =DOWN on host: {{ $labels.alias }}, interface: {{ $labels.interface }}, status: {{ $labels.operstate }}.\nValue: {{ $value }}."
+      description: "Interface status =DOWN on host: {{ $labels.alias }}, interface: {{ $labels.interface }}, status: {{ $labels.operstate }}.\nValue: {{ \$value }}."
       summary: "Interface status =DOWN."
       runbook: "Value for DOWN = 0 and UP = 1."
 #blocks_xfs
@@ -330,16 +330,16 @@ groups:
     labels:
       severity: warning
     annotations:
-      description: "xfs allocation blocks >85% on host:{{ $labels.alias }}, device: {{ $labels.device }}.\nValue: {{ humanizePercentage $value }}."
+      description: "xfs allocation blocks >85% on host:{{ $labels.alias }}, device: {{ $labels.device }}.\nValue: {{ humanizePercentage \$value }}."
       summary: "xfs allocation blocks >85%."
 #file, processes handlers
   - alert: node_file_handlers
-    expr: (node_filefd_allocated / node_filefd_maximum) < 0.85
-    for: 30s
+    expr: (node_filefd_allocated / node_filefd_maximum) > 0.85
+    for: 5m
     labels:
       severity: critical
     annotations:
-      description: "File handlers usage >85% on host: {{ $labels.job }}.\nValue: {{ humanizePercentage $value }}."
+      description: "File handlers usage >85% on host: {{ $labels.job }}.\nValue: {{ humanizePercentage \$value }}."
       summary: "File handlers usage >85%."
 
   - alert: node_process_handlers
@@ -348,7 +348,7 @@ groups:
     labels:
       severity: critical
     annotations:
-      description: "Process handlers usage >85% on host: {{ $labels.job }}.\nValue: {{ humanizePercentage $value }}."
+      description: "Process handlers usage >85% on host: {{ $labels.job }}.\nValue: {{ humanizePercentage \$value }}."
       summary: "Process handlers usage >85%."
 #processes
   - alert: node_processes_zombie
@@ -357,7 +357,7 @@ groups:
     labels:
       severity: warning
     annotations:
-      description: "Zombie processes on host: {{ $labels.alias }}, state: {{ $labels.state }}.\nValue: {{ $value }}."
+      description: "Zombie processes on host: {{ $labels.alias }}, state: {{ $labels.state }}.\nValue: {{ \$value }}."
       summary: "Zombie processes on host: {{ $labels.alias }}, state: {{ $labels.state }}."
 EOF
 cp -p /opt/prometheus/prometheus.yml /opt/prometheus/prometheus.yml.backup;echo $?
