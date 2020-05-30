@@ -1,9 +1,9 @@
 #!/bin/bash
-wget -q https://github.com/prometheus/node_exporter/releases/download/v0.18.1/node_exporter-0.18.1.linux-amd64.tar.gz;echo $?
+wget -q https://github.com/prometheus/node_exporter/releases/download/v1.0.0/node_exporter-1.0.0.linux-amd64.tar.gz;echo $?
 sleep 1
 mkdir /opt/node_exporter;echo $?
-tar -xzvf node_exporter-0.18.1.linux-amd64.tar.gz -C /opt/node_exporter --strip-components=1;echo $?
-rm -rf node_exporter-0.18.1.linux-amd64.tar.gz;echo $?
+tar -xzvf node_exporter-1.0.0.linux-amd64.tar.gz -C /opt/node_exporter --strip-components=1;echo $?
+rm -rf node_exporter-1.0.0.linux-amd64.tar.gz;echo $?
 cat <<EOF >>/etc/passwd
 node_exporter:x:1504:1504:node_exporter:/home/node_exporter:/sbin/nologin
 EOF
@@ -46,11 +46,11 @@ ExecStart=/opt/node_exporter/node_exporter \
         --no-collector.textfile \
         --no-collector.conntrack \
         --no-collector.infiniband \
-        --collector.systemd.unit-whitelist=(grafana-server|prometheus|alertmanager|node_exporter|sshd|crond|ntpd)\\.service \
+        --collector.systemd.unit-whitelist=(grafana-server|prometheus|alertmanager|node_exporter|blackbox_exporter|sshd|crond|ntpd)\\.service \
         --log.level=debug \
-        --log.format=logger:stdout?json=true \
- 
-SyslogIdentifier=prometheus_node_exporter
+        --log.format=json \
+
+SyslogIdentifier=node_exporter
 Restart=always
 
 ExecReload=/bin/kill -HUP $MAINPID
