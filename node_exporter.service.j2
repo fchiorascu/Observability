@@ -18,7 +18,7 @@ ExecStart={{ node_exporter_dir }}/node_exporter \
     --collector.systemd.unit-whitelist=({{ node_exporter_systemd_services | join('|') }})\.service \
     --web.disable-exporter-metrics \
     --log.level=debug \
-    --log.format=logger:stdout?json=true \
+    --log.format=json \
 
 SyslogIdentifier=node_exporter
 Restart=always
