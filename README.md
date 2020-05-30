@@ -30,7 +30,7 @@ To run the application locally below are the commands and arguments used in CLI.
 > /opt/alertmanager/alertmanager --config.file /opt/alertmanager/alertmanager.yml --storage.path=/opt/alertmanager/data/ --data.retention=120h --log.level=debug --log.format=json
 
 *node_exporter:*
-> /opt/node_exporter/node_exporter --web.listen-address=0.0.0.0:9100 --web.disable-exporter-metrics --collector.ntp --collector.systemd --collector.tcpstat --collector.processes--collector.interrupts --no-collector.zfs --no-collector.arp --no-collector.nfs --no-collector.ipvs --no-collector.nfsd --no-collector.wifi --no-collector.edac --no-collector.mdadm --no-collector.hwmon --no-collector.timex --no-collector.logind --no-collector.bcache --no-collector.bonding --no-collector.textfile --no-collector.conntrack --no-collector.infiniband --collector.systemd.unit-whitelist=(grafana-server|prometheus|alertmanager|node_exporter|sshd|crond|ntpd)\\.service --log.level=debug --log.format=logger:stdout?json=true
+> /opt/node_exporter/node_exporter --web.listen-address=0.0.0.0:9100 --web.disable-exporter-metrics --collector.ntp --collector.systemd --collector.tcpstat --collector.processes--collector.interrupts --no-collector.zfs --no-collector.arp --no-collector.nfs --no-collector.ipvs --no-collector.nfsd --no-collector.wifi --no-collector.edac --no-collector.mdadm --no-collector.hwmon --no-collector.timex --no-collector.logind --no-collector.bcache --no-collector.bonding --no-collector.textfile --no-collector.conntrack --no-collector.infiniband --collector.systemd.unit-whitelist=(grafana-server|prometheus|alertmanager|node_exporter|sshd|crond|ntpd)\\.service --log.level=debug --log.format=json
 
 
 ## Check configuration
