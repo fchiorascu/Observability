@@ -36,9 +36,6 @@ To run the application locally below are the commands and arguments used in CLI.
 ## Check configuration
 To check the application configuration with below commands and arguments used in CLI.
 
-*blackbox_exporter:*
-> /opt/blackbox_exporter/blackbox_exporter --config.check | grep -i "Config file is ok exiting..."
-	
 *prometheus:*
 > /opt/prometheus/promtool check config /opt/prometheus/prometheus.yml
 
