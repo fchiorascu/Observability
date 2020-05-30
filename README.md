@@ -36,6 +36,7 @@ To run the application locally below are the commands and arguments used in CLI.
 ## Check configuration
 To check the application configuration with below commands and arguments used in CLI.
 
+
 *prometheus:*
 > /opt/prometheus/promtool check config /opt/prometheus/prometheus.yml
 
@@ -43,12 +44,15 @@ To check the application configuration with below commands and arguments used in
 *#readiness*
 - curl -s -i 'http://localhost:9090/-/healthy'
 *#health*
+- curl -s -i 'http://localhost:9090/-/reload'
+*#reload*
 - curl -s -i 'http://localhost:9090/status'
 *#status page*
 - curl -s -i 'http://localhost:9090/metrics'
 *#internal metrics*
 - curl -s -i 'http://localhost:9090/metrics' | /opt/prometheus/promtool check metrics
 *#internal metrics correctness*
+
 
 *alertmanager:*
 > /opt/alertmanager/amtool --alertmanager.url=http://localhost:9093 check-config /opt/alertmanager/alertmanager.yml
@@ -61,6 +65,9 @@ To check the application configuration with below commands and arguments used in
 *#readiness*
 - curl -s -i 'http://localhost:9093/-/healthy'
 *#health*
+- curl -s -i 'http://localhost:9093/-/reload'
+*#reload*
+
 
 *blackbox_exporter:*
 > /opt/blackbox_exporter/blackbox_exporter --config.check | grep -i "Config file is ok exiting..."
@@ -69,11 +76,17 @@ To check the application configuration with below commands and arguments used in
 *#internal metrics*
 - curl -s -i 'http://localhost:9115/probe?target=https://www.google.com&module=http_2xx&debug=true'
 *#probe target metrics example*
+- curl -s -i 'http://localhost:9115/-/reload'
+*#reload*
+
 
 *node_exporter:*
 
 - curl -s -i 'http://localhost:9100/metrics'
 *#internal metrics*
+- curl -s -i 'http://localhost:9100/-/reload'
+*#reload*
+
 
 *grafana:*
 
