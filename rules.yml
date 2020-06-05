@@ -28,7 +28,7 @@ groups:
     labels:
       severity: critical
     annotations:
-      description: "Endpoint =DOWN on host: {{ $labels.job }}, instance: {{ $labels.instance }} and needs attention.\nValue: {{ $value }}\nLabels: {{ $labels }}."
+      description: "Endpoint =DOWN on host: {{ $labels.job }}, instance: {{ $labels.instance }} and needs attention.\nValue: {{ $value }}."
       summary: "Endpoint =DOWN on host: {{ $labels.job }}."
       runbook: "Value for DOWN = 0 and UP = 1."
 #reboot
