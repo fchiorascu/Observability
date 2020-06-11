@@ -361,8 +361,8 @@ groups:
       summary: "Zombie processes on host: {{ \$labels.alias }}, state: {{ \$labels.state }}."
 EOF
 cp -p /opt/prometheus/prometheus.yml /opt/prometheus/prometheus.yml.backup;echo $?
-tar -xzvf prometheus-2.18.1.linux-amd64.tar.gz -C /opt/prometheus --strip-components=1;rm -rf prometheus-2.18.1.linux-amd64.tar.gz;echo $?
-rm -rf prometheus-2.18.1.linux-amd64.tar.gz;echo $?
+tar -xzvf prometheus-2.19.0.linux-amd64.tar.gz -C /opt/prometheus --strip-components=1;rm -rf prometheus-2.19.0.linux-amd64.tar.gz;echo $?
+rm -rf prometheus-2.19.0.linux-amd64.tar.gz;echo $?
 mkdir --parents /data/prometheus;echo $?
 cat <<EOF >>/etc/passwd
 prometheus:x:1501:1501:prometheus:/home/prometheus:/sbin/nologin
