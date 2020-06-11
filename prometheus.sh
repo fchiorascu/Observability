@@ -1,5 +1,5 @@
 #!/bin/bash
-wget -q https://github.com/prometheus/prometheus/releases/download/v2.18.1/prometheus-2.18.1.linux-amd64.tar.gz;echo $?
+wget -q https://github.com/prometheus/prometheus/releases/download/v2.19.0/prometheus-2.19.0.linux-amd64.tar.gz;echo $?
 sleep 1
 mkdir /opt/prometheus;echo $?
 cat > /opt/prometheus/rules.yml <<EOF
@@ -315,7 +315,7 @@ groups:
       summary: "Network errors >0."
 
   - alert: node_network_interface_status
-    expr: node_network_up{device!~"lo|docker0"} < 1
+    expr: node_network_up{device="eth0"} < 1
     for: 5m
     labels:
       severity: critical
