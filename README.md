@@ -2,7 +2,7 @@
 Observability is a measure of how well internal states of a system can be inferred by knowledge of its external outputs.
 
 
-## Components
+### Components
 
 <hr/>
 
@@ -22,7 +22,7 @@ Alerting rules in Prometheus servers send alerts to an Alertmanager. The Alertma
 - The blackbox exporter allows blackbox probing of endpoints over HTTP, HTTPS, DNS, TCP and ICMP.
 
 
-## RUN
+### RUN
 To run the application locally below are the commands and arguments used in CLI.
 
 *blackbox_exporter:*
@@ -41,12 +41,13 @@ To run the application locally below are the commands and arguments used in CLI.
 > /opt/node_exporter/node_exporter --web.listen-address=0.0.0.0:9100 --web.disable-exporter-metrics --collector.ntp --collector.systemd --collector.tcpstat --collector.processes--collector.interrupts --no-collector.zfs --no-collector.arp --no-collector.nfs --no-collector.ipvs --no-collector.nfsd --no-collector.wifi --no-collector.edac --no-collector.mdadm --no-collector.hwmon --no-collector.timex --no-collector.logind --no-collector.bcache --no-collector.bonding --no-collector.textfile --no-collector.conntrack --no-collector.infiniband --collector.systemd.unit-whitelist=(grafana-server|prometheus|alertmanager|node_exporter|sshd|crond|ntpd)\\.service --log.level=debug --log.format=json
 
 
-## Check configuration
+### Check configuration
 To check the application configuration with below commands and arguments used in CLI.
 
 
 *prometheus:*
 > /opt/prometheus/promtool check config /opt/prometheus/prometheus.yml
+
 > /opt/prometheus/promtool check web-config /opt/prometheus/web-config.yml
 
 - curl -s -i 'http://localhost:9090/-/ready'
@@ -103,5 +104,5 @@ To check the application configuration with below commands and arguments used in
 *#internal metrics*
 
 
-## Dashboards (Grafana)
+### Dashboards (Grafana)
 - https://grafana.com/grafana/dashboards/9096
