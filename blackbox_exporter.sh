@@ -1,9 +1,9 @@
 #!/bin/bash
-wget -q https://github.com/prometheus/blackbox_exporter/releases/download/v0.16.0/blackbox_exporter-0.16.0.linux-amd64.tar.gz;echo $?
+wget -q https://github.com/prometheus/blackbox_exporter/releases/download/v0.18.0/blackbox_exporter-0.18.0.linux-amd64.tar.gz;echo $?
 sleep 1
 mkdir /opt/blackbox_exporter;echo $?
-tar -xzvf blackbox_exporter-0.16.0.linux-amd64.tar.gz -C /opt/blackbox_exporter --strip-components=1;echo $?
-rm -rf blackbox_exporter-0.16.0.linux-amd64.tar.gz;echo $?
+tar -xzvf blackbox_exporter-0.18.0.linux-amd64.tar.gz -C /opt/blackbox_exporter --strip-components=1;echo $?
+rm -rf blackbox_exporter-0.18.0.linux-amd64.tar.gz;echo $?
 cat <<EOF >>/etc/passwd
 blackbox_exporter:x:1503:1503:blackbox_exporter:/home/blackbox_exporter:/sbin/nologin
 EOF
