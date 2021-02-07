@@ -3,7 +3,7 @@ yum install -y initscripts urw-fonts wget curl ntp haveged.x86_64;echo $?
 systemctl enable ntpd haveged;echo $?
 systemctl restart ntpd haveged;echo $?
 systemctl status ntpd haveged;echo $?
-#wget -q --show-progress https://dl.grafana.com/oss/release/grafana-7.0.0-beta3.x86_64.rpm;echo $?
+###wget -q --show-progress https://dl.grafana.com/oss/release/grafana-7.4.0-1.x86_64.rpm;echo $?###
 cat <<EOF >/etc/yum.repos.d/grafana.repo
 [grafana]
 name=grafana
