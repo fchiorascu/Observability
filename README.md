@@ -11,6 +11,7 @@ Observability is a measure of how well internal states of a system can be inferr
 | Prometheus | [2.24.1](https://prometheus.io/download/#prometheus "Download") |
 | Alertmanager | [0.21.0](https://prometheus.io/download/#alertmanager "Download") |
 | blackbox_exporter | [0.18.0](https://prometheus.io/download/#blackbox_exporter "Download") |
+| Grafana | [7.4.0](https://dl.grafana.com/oss/release/grafana-7.4.0-1.x86_64.rpm "Download") |
 
 <hr/>
 
