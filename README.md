@@ -1,30 +1,39 @@
-# Observability Stack (pillars: monitoring/ visualization /alerting) <a name="top"></a>
+# Observability Pillars: monitoring, visualization, alerting. <a name="top"></a>
 Observability is a measure of how well internal states of a system can be inferred by knowledge of its external outputs.
 
 
 ## Components
-- [ ] **Visualisation**
-- Grafana is the open source analytics & monitoring solution for every database.
+
+<hr/>
+
+| APP | Version |
+| :--- | ---: |
+| Prometheus | [2.24.1](https://prometheus.io/download/#prometheus "Download") |
+| Alertmanager | [0.21.0](https://prometheus.io/download/#alertmanager "Download") |
+| blackbox_exporter | [0.18.0](https://prometheus.io/download/#blackbox_exporter "Download") |
+
+<hr/>
+
 - [ ] **Monitoring**
 - Prometheus collects metrics from monitored targets by scraping metrics HTTP endpoints on these targets.
-- node_exporter: collects metrics from node/system/os/vm.
-- exporters: colects metrics from different applications.
 - [ ] **Alerting**
 Alerting rules in Prometheus servers send alerts to an Alertmanager. The Alertmanager then manages those alerts, including silencing, inhibition, aggregation and sending out notifications via methods such as email, on-call notification systems, and chat platforms.
 - [ ] **Probing**
-- blackbox_exporter: probes urls/certificates.
+- The blackbox exporter allows blackbox probing of endpoints over HTTP, HTTPS, DNS, TCP and ICMP.
+
 
 ## RUN
 To run the application locally below are the commands and arguments used in CLI.
 
 *blackbox_exporter:*
 > /opt/blackbox_exporter/blackbox_exporter --config.file /opt/blackbox_exporter/blackbox.yml --log.level=debug --log.format=json
+> /bin/blackbox_exporter --config.check | grep -i "Config file is ok exiting..."
 
 *grafana:*
 > /usr/share/grafana/bin/grafana-server restart
 		
 *prometheus:*
-> /opt/prometheus/prometheus--config.file /opt/prometheus/prometheus.yml --storage.tsdb.path=/data/prometheus --web.console.templates=/opt/prometheus/consoles --web.console.libraries=/opt/prometheus/console_libraries --web.enable-lifecycle --storage.tsdb.retention.time=31d --storage.tsdb.max-block-duration=72h --storage.tsdb.min-block-duration=2h --log.level=debug --log.format=json
+> /opt/prometheus/prometheus--config.file /opt/prometheus/prometheus.yml --storage.tsdb.path=/data/prometheus --web.console.templates=/opt/prometheus/consoles --web.console.libraries=/opt/prometheus/console_libraries --web.enable-lifecycle --web.config.file=/etc/prometheus/web-config.yml --storage.tsdb.retention.time=31d --storage.tsdb.max-block-duration=12h --storage.tsdb.min-block-duration=2h --log.level=debug --log.format=json
 
 *alertmanager:*
 > /opt/alertmanager/alertmanager --config.file /opt/alertmanager/alertmanager.yml --storage.path=/opt/alertmanager/data/ --data.retention=120h --log.level=debug --log.format=json
@@ -39,6 +48,7 @@ To check the application configuration with below commands and arguments used in
 
 *prometheus:*
 > /opt/prometheus/promtool check config /opt/prometheus/prometheus.yml
+> /opt/prometheus/promtool check web-config /opt/prometheus/web-config.yml
 
 - curl -s -i 'http://localhost:9090/-/ready'
 *#readiness*
