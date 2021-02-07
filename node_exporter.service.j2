@@ -4,10 +4,10 @@ Wants=network-online.target
 After=network-online.target
 
 [Service]
-User={{ node_exporter_user }}
-Group={{ node_exporter_group }}
+User=node_exporter
+Group=node_exporter
 Type=simple
-ExecStart={{ node_exporter_dir }}/node_exporter \
+ExecStart=/opt/node_exporter/node_exporter \
         --web.listen-address=0.0.0.0:9100 \
     {% for collectors in node_exporter_collectors %}
     --collector.{{ collectors }} \
