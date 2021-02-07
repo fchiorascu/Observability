@@ -387,10 +387,23 @@ scrape_configs:
 ###Prometheus Job containing endpoints for Prometheus, Alertmanager and blackbox_exporter###
   - job_name: prometheus
     static_configs:
-      - targets: ['localhost:9100','localhost:9115','localhost:9090','localhost:9093']
+      - targets: ['localhost:9100','localhost:9090']
         labels:
           env: dev
           alias: prometheus
+    basic_auth:
+      username: user1
+      password: xxxxxxxxxxx
+###Prometheus Job containing endpoints for Alertmanager and blackbox_exporter###
+  - job_name: alertmanager
+    static_configs:
+      - targets: ['localhost:9115','localhost:9093']
+        labels:
+          env: dev
+          alias: prometheus
+    basic_auth:
+      username: user1
+      password: xxxxxxxxxxx   
 ###Grafana Job###
   - job_name: grafana
     tls_config:
@@ -438,10 +451,9 @@ scrape_configs:
         replacement: 127.0.0.1:9115
 EOF
 cat <<EOF >/opt/prometheus/web-config.yml
-  basic_auth_users:
-    user1: $2y$12$Zc1Y8NCi/0BcdpXcIijvx.h058quChP2dNWRsJf5L7/r4j2pyUAcO #bcrypt password hash
-    user2: $2y$12$BvwAbqZ1WIsSE5na/niXxOf7QQFwKwNj2Bria226J3dixf7/FTwkK #bcrypt password hash
-    user3: $2y$12$aFH9EJKoXJdbbOGZ2btk5..num8MX37DTIZdFTDYbSjkargRiHYAS #bcrypt password hash
+basic_auth_users:
+  alice: $2y$10$mDwo.lAisC94iLAyP81MCesa29IzH37oigHC/42V2pdJlUprsJPze
+  bob: $2y$10$hLqFl9jSjoAAy95Z/zw8Ye8wkdMBM8c5Bn1ptYqP/AXyV0.oy0S8m
 EOF
 chown --recursive prometheus:prometheus /opt/prometheus;echo $?
 chown --recursive prometheus:prometheus /data/prometheus;echo $?
@@ -461,7 +473,7 @@ User=prometheus
 Group=prometheus
 Type=simple
 ExecStart=/opt/prometheus/prometheus \
-        --config.file /opt/prometheus/prometheus.yml \
+        --config.file=/opt/prometheus/prometheus.yml \
         --storage.tsdb.path=/data/prometheus \
         --web.console.templates=/opt/prometheus/consoles \
         --web.console.libraries=/opt/prometheus/console_libraries \
