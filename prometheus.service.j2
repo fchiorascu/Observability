@@ -4,19 +4,20 @@ Wants=network-online.target
 After=network-online.target
 
 [Service]
-User={{ prometheus_user }}
-Group={{ prometheus_group }}
+User=prometheus
+Group=prometheus
 Type=simple
-ExecStart={{ prometheus_dir }}/prometheus
-        --config.file={{ prometheus_dir }}/prometheus.yml \
+ExecStart=/opt/prometheus/prometheus
+        --config.file=/opt/prometheus/prometheus.yml \
         --web.route-prefix={{ prometheus_prefix }} \
-        --storage.tsdb.path={{ prometheus_data }} \
-        --web.console.templates={{ prometheus_dir }}/consoles \
-        --web.console.libraries={{ prometheus_dir }}/console_libraries \
+        --storage.tsdb.path=/opt/prometheus/data \
+        --web.console.templates=/opt/prometheus/consoles \
+        --web.console.libraries=/opt/prometheus/console_libraries \
         --storage.tsdb.min-block-duration=2h \
-        --storage.tsdb.max-block-duration=72h \
+        --storage.tsdb.max-block-duration=12h \
         --storage.tsdb.retention=31d \
         --web.external-url={{ prometheus_web_external_url }} \
+        --web.config.file=/opt/prometheus/web-config.yml
         --web.enable-lifecycle \
         --log.level=debug \
         --log.format=json \
