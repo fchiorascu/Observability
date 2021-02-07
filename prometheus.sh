@@ -393,7 +393,7 @@ scrape_configs:
           alias: prometheus
     basic_auth:
       username: user1
-      password: xxxxxxxxxxx
+      password: xxxxx
 ###Prometheus Job containing endpoints for Alertmanager and blackbox_exporter###
   - job_name: alertmanager
     static_configs:
@@ -403,7 +403,7 @@ scrape_configs:
           alias: prometheus
     basic_auth:
       username: user1
-      password: xxxxxxxxxxx   
+      password: xxxxxx   
 ###Grafana Job###
   - job_name: grafana
     tls_config:
