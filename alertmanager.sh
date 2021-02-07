@@ -1,9 +1,9 @@
 #!/bin/bash
-wget -q https://github.com/prometheus/alertmanager/releases/download/v0.20.0/alertmanager-0.20.0.linux-amd64.tar.gz;echo $?
+wget -q https://github.com/prometheus/alertmanager/releases/download/v0.21.0/alertmanager-0.21.0.linux-amd64.tar.gz;echo $?
 sleep 1
 mkdir --parents /opt/alertmanager/data/;echo $?
-tar -xzvf alertmanager-0.20.0.linux-amd64.tar.gz -C /opt/alertmanager --strip-components=1;echo $?
-rm -rf alertmanager-0.20.0.linux-amd64.tar.gz;echo $?
+tar -xzvf alertmanager-0.21.0.linux-amd64.tar.gz -C /opt/alertmanager --strip-components=1;echo $?
+rm -rf alertmanager-0.21.0.linux-amd64.tar.gz;echo $?
 cat <<EOF >>/etc/passwd
 alertmanager:x:1502:1502:alertmanager:/home/alertmanager:/sbin/nologin
 EOF
