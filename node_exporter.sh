@@ -26,7 +26,6 @@ ExecStart=/opt/node_exporter/node_exporter \
         --web.listen-address=0.0.0.0:9100 \
         --web.disable-exporter-metrics \
         --collector.ntp \
-        --collector.systemd \
         --collector.tcpstat \
         --collector.processes \
         --collector.interrupts \
