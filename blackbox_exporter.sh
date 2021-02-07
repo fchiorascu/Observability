@@ -26,6 +26,9 @@ modules:
       preferred_ip_protocol: "ip4" # defaults to "ip6"
       tls_config:
         insecure_skip_verify: true
+      basic_auth:
+        username: "user1"
+        password: "xxxxx"
   http_2xx_success:
     prober: http
     timeout: 10s
@@ -39,6 +42,9 @@ modules:
         Content-Type: application/json
       fail_if_body_not_matches_regexp:
       - '"status": "success"'
+      basic_auth:
+        username: "user1"
+        password: "xxxxx"
 EOF
 chown --recursive blackbox_exporter:blackbox_exporter /opt/blackbox_exporter;echo $?
 ln -s /opt/blackbox_exporter/blackbox_exporter /usr/local/bin/blackbox_exporter;echo $?
