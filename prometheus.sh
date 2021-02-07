@@ -1,5 +1,5 @@
 #!/bin/bash
-wget -q https://github.com/prometheus/prometheus/releases/download/v2.19.0/prometheus-2.19.0.linux-amd64.tar.gz;echo $?
+wget -q https://github.com/prometheus/prometheus/releases/download/v2.24.1/prometheus-2.24.1.linux-amd64.tar.gz;echo $?
 sleep 1
 mkdir /opt/prometheus;echo $?
 cat > /opt/prometheus/rules.yml <<EOF
@@ -361,8 +361,8 @@ groups:
       summary: "Zombie processes on host: {{ \$labels.alias }}, state: {{ \$labels.state }}."
 EOF
 cp -p /opt/prometheus/prometheus.yml /opt/prometheus/prometheus.yml.backup;echo $?
-tar -xzvf prometheus-2.19.0.linux-amd64.tar.gz -C /opt/prometheus --strip-components=1;rm -rf prometheus-2.19.0.linux-amd64.tar.gz;echo $?
-rm -rf prometheus-2.19.0.linux-amd64.tar.gz;echo $?
+tar -xzvf prometheus-2.24.1.linux-amd64.tar.gz -C /opt/prometheus --strip-components=1;rm -rf prometheus-2.24.1.linux-amd64.tar.gz;echo $?
+rm -rf prometheus-2.24.1.linux-amd64.tar.gz;echo $?
 mkdir --parents /data/prometheus;echo $?
 cat <<EOF >>/etc/passwd
 prometheus:x:1501:1501:prometheus:/home/prometheus:/sbin/nologin
@@ -437,12 +437,19 @@ scrape_configs:
       - target_label: __address__
         replacement: 127.0.0.1:9115
 EOF
+cat <<EOF >/opt/prometheus/web-config.yml
+  basic_auth_users:
+    user1: $2y$12$Zc1Y8NCi/0BcdpXcIijvx.h058quChP2dNWRsJf5L7/r4j2pyUAcO #bcrypt password hash
+    user2: $2y$12$BvwAbqZ1WIsSE5na/niXxOf7QQFwKwNj2Bria226J3dixf7/FTwkK #bcrypt password hash
+    user3: $2y$12$aFH9EJKoXJdbbOGZ2btk5..num8MX37DTIZdFTDYbSjkargRiHYAS #bcrypt password hash
+EOF
 chown --recursive prometheus:prometheus /opt/prometheus;echo $?
 chown --recursive prometheus:prometheus /data/prometheus;echo $?
 ln -s /opt/prometheus/promtool /usr/local/bin/promtool;echo $?
 ln -s /opt/prometheus/prometheus /usr/local/bin/prometheus;echo $?
 ls -ltrha /usr/local/bin/prom*
 /opt/prometheus/promtool check config /opt/prometheus/prometheus.yml;echo $?
+/opt/prometheus/promtool check web-config /opt/prometheus/web-config.yml;echo $?
 cat <<EOF >/usr/lib/systemd/system/prometheus.service
 [Unit]
 Description=Prometheus Server
@@ -462,6 +469,7 @@ ExecStart=/opt/prometheus/prometheus \
         --storage.tsdb.retention.time=31d \
         --storage.tsdb.max-block-duration=72h \
         --storage.tsdb.min-block-duration=2h \
+        --web.config.file=/opt/prometheus/web-config.yml \
         --log.level=debug \
         --log.format=json \
 
