@@ -27,7 +27,6 @@ To run the application locally below are the commands and arguments used in CLI.
 
 *blackbox_exporter:*
 > /opt/blackbox_exporter/blackbox_exporter --config.file /opt/blackbox_exporter/blackbox.yml --log.level=debug --log.format=json
-> /bin/blackbox_exporter --config.check | grep -i "Config file is ok exiting..."
 
 *grafana:*
 > /usr/share/grafana/bin/grafana-server restart
