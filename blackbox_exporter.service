@@ -9,8 +9,8 @@ Type=simple
 User=blackbox_exporter
 Group=blackbox_exporter
 
-ExecStart={{ blackbox_exporter_dir }}/blackbox_exporter \
-        --config.file {{ blackbox_exporter_dir }}/blackbox.yml \
+ExecStart=/opt/blackbox_exporter/blackbox_exporter \
+        --config.file=/opt/blackbox_exporter/blackbox.yml \
         --log.level=debug \
         --log.format=json \
 
