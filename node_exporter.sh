@@ -1,9 +1,9 @@
 #!/bin/bash
-wget -q https://github.com/prometheus/node_exporter/releases/download/v1.1.0/node_exporter-1.1.0.linux-amd64.tar.gz;echo $?
+wget -q https://github.com/prometheus/node_exporter/releases/download/v1.1.1/node_exporter-1.1.1.linux-amd64.tar.gz;echo $?
 sleep 1
 mkdir /opt/node_exporter;echo $?
-tar -xzvf node_exporter-1.1.0.linux-amd64.tar.gz -C /opt/node_exporter --strip-components=1;echo $?
-rm -rf node_exporter-1.1.0.linux-amd64.tar.gz;echo $?
+tar -xzvf node_exporter-1.1.1.linux-amd64.tar.gz -C /opt/node_exporter --strip-components=1;echo $?
+rm -rf node_exporter-1.1.1.linux-amd64.tar.gz;echo $?
 cat <<EOF >>/etc/passwd
 node_exporter:x:1504:1504:node_exporter:/home/node_exporter:/sbin/nologin
 EOF
